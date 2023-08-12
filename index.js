@@ -31,7 +31,7 @@ app.get('/:storyUrl', async (req, res) => {
       const html = response.data;
 
       // Store the data in Redis cache for future use
-      await redis.set(storyUrl, html, 'EX', 1); // 3600 seconds expiration time
+      await redis.set(storyUrl, html, 'EX', 3600); // 3600 seconds expiration time
 
       res.setHeader('Content-Type', 'text/html');
       res.status(200).send(html);
