@@ -5,10 +5,7 @@ const app = express();
 const PORT = 4000;
 
 // Configure Redis client
-const redis = new Redis({
-  host: 'red-cffst6hgp3jjsea2p1c0', // Replace with your host
-  port: '6379', // Replace with your port
-});
+const redis = new Redis("rediss://red-cffst6hgp3jjsea2p1c0:hsTt7ViwP8IrERyZaryFhRsIcV8x7xQ0@singapore-redis.render.com:6379");
 
 app.listen(PORT, () => {
   console.log(`API listening on PORT ${PORT}`);
