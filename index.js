@@ -50,14 +50,15 @@ app.get('/:storyUrl', async (req, res) => {
 
   // Try to fetch the data from Redis cache first
   try {
-    const cachedData = await redis.get(storyUrl);
-    
+    let cachedData = await redis.get(storyUrl);
     if (cachedData) {
       // Send the cached data if found
       res.setHeader('Content-Type', 'text/html');
       res.status(200).send(cachedData);
     } else {
-      // Fetch the data if not in cache
+if(storyUrl==="favicon.ico"){
+  return null
+}
       const response = await axios.get(`https://whitetigerhome.in/web-stories/${storyUrl}`);
       let html = response.data;
       html = replaceOgUrl(html);
