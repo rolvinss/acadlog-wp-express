@@ -6,12 +6,12 @@ const app = express();
 const PORT = 4000;
 
 // Configure Redis client
-// const redis = new Redis("rediss://red-cffst6hgp3jjsea2p1c0:hsTt7ViwP8IrERyZaryFhRsIcV8x7xQ0@singapore-redis.render.com:6379");
+const redis = new Redis("rediss://red-cffst6hgp3jjsea2p1c0:hsTt7ViwP8IrERyZaryFhRsIcV8x7xQ0@singapore-redis.render.com:6379");
 
-const redis = new Redis({
-  hostname: "localhost",
-  port: "6379"
-});
+// const redis = new Redis({
+//   hostname: "localhost",
+//   port: "6379"
+// });
 
 
 function replaceOgUrl(html) {
