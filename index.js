@@ -24,7 +24,7 @@ app.get('/:storyUrl', async (req, res) => {
       res.status(200).send(cachedData);
     } else {
       // Fetch the data if not in cache
-      const response = await axios.get(`https://acadlog.in/web-stories/${storyUrl}`);
+      const response = await axios.get(`https://whitetigerhome.in/web-stories/${storyUrl}`);
       const html = response.data;
 
       // Store the data in Redis cache for future use
