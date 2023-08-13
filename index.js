@@ -7,19 +7,16 @@ const PORT = 4000;
 
 
 // Configure Redis client
-// const redis = new Redis("rediss://red-cffst6hgp3jjsea2p1c0:hsTt7ViwP8IrERyZaryFhRsIcV8x7xQ0@singapore-redis.render.com:6379");
+const redis = new Redis("rediss://red-cffst6hgp3jjsea2p1c0:hsTt7ViwP8IrERyZaryFhRsIcV8x7xQ0@singapore-redis.render.com:6379");
 
-const redis = new Redis({
-  hostname: "localhost",
-  port: "6379"
-});
+// const redis = new Redis({
+//   hostname: "localhost",
+//   port: "6379"
+// });
 
 function replaceOgUrl(html) {
   const dom = new JSDOM(html);
   
-  // Log the original HTML for debugging
-  console.log("Original HTML:", html);
-
   const ogUrlMetaTag = dom.window.document.querySelector('meta[property="og:url"]');
 
   if (ogUrlMetaTag) {
@@ -32,9 +29,6 @@ function replaceOgUrl(html) {
   // Replace canonical link
   const canonicalLink = dom.window.document.querySelector('link[rel="canonical"]');
   
-  // Log the canonical link for debugging
-  console.log("Canonical Link Element:", canonicalLink);
-
   if (canonicalLink) {
     const href = canonicalLink.getAttribute('href');
     if (href && href.includes('whitetigerhome.in')) {
@@ -44,8 +38,6 @@ function replaceOgUrl(html) {
 
   const updatedHtml = dom.serialize();
   // Log the updated HTML for debugging
-  console.log("Updated HTML:", updatedHtml);
-
   return updatedHtml;
 }
 
