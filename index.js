@@ -10,6 +10,23 @@ const redis = new Redis("rediss://red-cffst6hgp3jjsea2p1c0:hsTt7ViwP8IrERyZaryFh
 app.listen(PORT, () => {
   console.log(`API listening on PORT ${PORT}`);
 });
+function replaceOgUrl(html) {
+  let updatedHtml = html;
+
+  // Replace 'og:url' content
+  updatedHtml = updatedHtml.replace(
+    /<meta property="og:url" content="https:\/\/whitetigerhome\.in([^"]*)"/g,
+    '<meta property="og:url" content="https://acadlog.com$1"'
+  );
+
+  // Replace canonical link
+  updatedHtml = updatedHtml.replace(
+    /<link rel="canonical" href="https:\/\/whitetigerhome\.in([^"]*)"/g,
+    '<link rel="canonical" href="https://acadlog.com$1"'
+  );
+
+  return updatedHtml;
+}
 
 app.get('/:storyUrl', async (req, res) => {
   const { storyUrl } = req.params;
@@ -18,15 +35,15 @@ app.get('/:storyUrl', async (req, res) => {
   try {
     const cachedData = await redis.get(storyUrl);
     
-    if (cachedData) {
+    if (!cachedData) {
       // Send the cached data if found
       res.setHeader('Content-Type', 'text/html');
       res.status(200).send(cachedData);
     } else {
       // Fetch the data if not in cache
       const response = await axios.get(`https://whitetigerhome.in/web-stories/${storyUrl}`);
-      const html = response.data;
-
+      let html = response.data;
+      html = replaceOgUrl(html);
       // Store the data in Redis cache for future use
       await redis.set(storyUrl, html, 'EX', 3600); // 3600 seconds expiration time
 
