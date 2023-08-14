@@ -45,7 +45,7 @@ app.listen(PORT, () => {
   console.log(`API listening on PORT ${PORT}`);
 });
 
-app.get('/:storyUrl', async (req, res) => {
+app.get('/story/:storyUrl', async (req, res) => {
   const { storyUrl } = req.params;
 
   // Try to fetch the data from Redis cache first
@@ -56,9 +56,6 @@ app.get('/:storyUrl', async (req, res) => {
       res.setHeader('Content-Type', 'text/html');
       res.status(200).send(cachedData);
     } else {
-if(storyUrl==="favicon.ico"){
-  return null
-}
       const response = await axios.get(`https://whitetigerhome.in/web-stories/${storyUrl}`);
       let html = response.data;
       html = replaceOgUrl(html);
@@ -70,7 +67,7 @@ if(storyUrl==="favicon.ico"){
     }
   } catch (error) {
     console.error(error);
-    res.status(500).send('An error occurred while fetching the content');
+    res.status(404).send('An error occurred while fetching the content');
   }
 });
 
