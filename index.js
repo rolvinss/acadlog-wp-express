@@ -35,7 +35,7 @@ app.get('/:storyUrl', async (req, res) => {
   try {
     const cachedData = await redis.get(storyUrl);
     
-    if (!cachedData) {
+    if (cachedData) {
       // Send the cached data if found
       res.setHeader('Content-Type', 'text/html');
       res.status(200).send(cachedData);
