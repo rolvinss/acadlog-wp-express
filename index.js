@@ -28,6 +28,34 @@ function replaceOgUrl(html) {
   return updatedHtml;
 }
 
+app.get('/myjob/:blogUrl', async (req, res) => {
+  const { blogUrl } = req.params;
+
+  // Try to fetch the data from Redis cache first
+  try {
+    const cachedData = await redis.get(blogUrl);
+    
+    if (cachedData) {
+      // Send the cached data if found
+      res.setHeader('Content-Type', 'text/html');
+      res.status(200).send(cachedData);
+    } else {
+      // Fetch the data if not in cache
+      const response = await axios.get(`https://whitetigerhome.in/${blogUrl}`);
+      let html = response.data;
+      html = replaceOgUrl(html);
+      // Store the data in Redis cache for future use
+      await redis.set(blogUrl, html, 'EX', 3600); // 3600 seconds expiration time
+
+      res.setHeader('Content-Type', 'text/html');
+      res.status(200).send(html);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('An error occurred while fetching the content');
+  }
+});
+
 app.get('/:storyUrl', async (req, res) => {
   const { storyUrl } = req.params;
 
