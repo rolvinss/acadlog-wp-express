@@ -36,7 +36,8 @@ function replaceOgUrl(html) {
 
 
 app.get('/*', async (req, res) => {
-  let path = req.params[0].split("blog/")[1]
+  let path = req.params[0]
+  console.log(path)
   try {
       const response = await axios.get(`https://whitetigerhome.in/${path}`);
       let html = response.data;
