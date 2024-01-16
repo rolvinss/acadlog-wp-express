@@ -16,129 +16,121 @@ function replaceOgUrl(html) {
   // Replace 'og:url' content
   updatedHtml = updatedHtml.replace(
     /<meta property="og:url" content="https:\/\/whitetigerhome\.in([^"]*)"/g,
-    '<meta property="og:url" content="https://acadlog.com$1"'
+    '<meta property="og:url" content="https://acadlog.com/blog$1"'
   );
 
   // Replace canonical link
   updatedHtml = updatedHtml.replace(
     /<link rel="canonical" href="https:\/\/whitetigerhome\.in([^"]*)"/g,
-    '<link rel="canonical" href="https://acadlog.com$1"'
+    '<link rel="canonical" href="https://acadlog.com/blog$1"'
+  );
+
+  // General replacement for 'whitetigerhome.in' to 'acadlog.com', excluding URLs with 'wp-content'
+  updatedHtml = updatedHtml.replace(
+    /https:\/\/whitetigerhome\.in(?!.*wp-content)([^"]*)/g,
+    'https://acadlog.com/blog$1'
   );
 
   return updatedHtml;
 }
 
-app.get('/job-alert/:blogUrl', async (req, res) => {
-  const { blogUrl } = req.params;
 
-  // Try to fetch the data from Redis cache first
+app.get('/*', async (req, res) => {
+  let path = req.params[0].split("blog/")[1]
   try {
-    const cachedData = await redis.get(blogUrl);
-    
-    if (cachedData) {
-      // Send the cached data if found
-      res.setHeader('Content-Type', 'text/html');
-      res.status(200).send(cachedData);
-    } else {
-      // Fetch the data if not in cache
-      const response = await axios.get(`https://whitetigerhome.in/job-alert/${blogUrl}`);
+      const response = await axios.get(`https://whitetigerhome.in/${path}`);
       let html = response.data;
       html = replaceOgUrl(html);
-      // Store the data in Redis cache for future use
-      await redis.set(blogUrl, html, 'EX', 3600); // 3600 seconds expiration time
-
       res.setHeader('Content-Type', 'text/html');
       res.status(200).send(html);
+    }catch(err){
+      res.status(500).send('An error occurred while fetching the content');
     }
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('An error occurred while fetching the content');
-  }
 });
 
-app.get('/blog/hi/:blogUrl', async (req, res) => {
-  const { blogUrl } = req.params;
+// app.get('/blog/hi/:blogUrl', async (req, res) => {
+//   const { blogUrl } = req.params;
 
-  // Try to fetch the data from Redis cache first
-  try {
-    const cachedData = await redis.get(blogUrl);
+//   // Try to fetch the data from Redis cache first
+//   try {
+//     const cachedData = await redis.get(blogUrl);
     
-    if (cachedData) {
-      // Send the cached data if found
-      res.setHeader('Content-Type', 'text/html');
-      res.status(200).send(cachedData);
-    } else {
-      // Fetch the data if not in cache
-      const response = await axios.get(`https://whitetigerhome.in/blog/hi/${blogUrl}`);
-      let html = response.data;
-      html = replaceOgUrl(html);
-      // Store the data in Redis cache for future use
-      await redis.set(blogUrl, html, 'EX', 3600); // 3600 seconds expiration time
+//     if (cachedData) {
+//       // Send the cached data if found
+//       res.setHeader('Content-Type', 'text/html');
+//       res.status(200).send(cachedData);
+//     } else {
+//       // Fetch the data if not in cache
+//       const response = await axios.get(`https://whitetigerhome.in/blog/hi/${blogUrl}`);
+//       let html = response.data;
+//       html = replaceOgUrl(html);
+//       // Store the data in Redis cache for future use
+//       await redis.set(blogUrl, html, 'EX', 0); // 3600 seconds expiration time
 
-      res.setHeader('Content-Type', 'text/html');
-      res.status(200).send(html);
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('An error occurred while fetching the content');
-  }
-});
+//       res.setHeader('Content-Type', 'text/html');
+//       res.status(200).send(html);
+//     }
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send('An error occurred while fetching the content');
+//   }
+// });
 
-app.get('/blog/:blogUrl', async (req, res) => {
-  const { blogUrl } = req.params;
+// app.get('/blog/:blogUrl', async (req, res) => {
+//   const { blogUrl } = req.params;
 
-  // Try to fetch the data from Redis cache first
-  try {
-    const cachedData = await redis.get(blogUrl);
+//   // Try to fetch the data from Redis cache first
+//   try {
+//     const cachedData = await redis.get(blogUrl);
     
-    if (cachedData) {
-      // Send the cached data if found
-      res.setHeader('Content-Type', 'text/html');
-      res.status(200).send(cachedData);
-    } else {
-      // Fetch the data if not in cache
-      const response = await axios.get(`https://whitetigerhome.in/blog/${blogUrl}`);
-      let html = response.data;
-      html = replaceOgUrl(html);
-      // Store the data in Redis cache for future use
-      await redis.set(blogUrl, html, 'EX', 3600); // 3600 seconds expiration time
+//     if (false) {
+//       // Send the cached data if found
+//       res.setHeader('Content-Type', 'text/html');
+//       res.status(200).send(cachedData);
+//     } else {
+//       // Fetch the data if not in cache
+//       const response = await axios.get(`https://whitetigerhome.in/blog/${blogUrl}`);
+//       let html = response.data;
+//       html = replaceOgUrl(html);
+//       // Store the data in Redis cache for future use
+//       await redis.set(blogUrl, html, 'EX', 3600); // 3600 seconds expiration time
 
-      res.setHeader('Content-Type', 'text/html');
-      res.status(200).send(html);
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('An error occurred while fetching the content');
-  }
-});
+//       res.setHeader('Content-Type', 'text/html');
+//       res.status(200).send(html);
+//     }
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send('An error occurred while fetching the content');
+//   }
+// });
 
-app.get('/:storyUrl', async (req, res) => {
-  const { storyUrl } = req.params;
+// app.get('/:storyUrl', async (req, res) => {
+//   const { storyUrl } = req.params;
 
-  // Try to fetch the data from Redis cache first
-  try {
-    const cachedData = await redis.get(storyUrl);
+//   // Try to fetch the data from Redis cache first
+//   try {
+//     const cachedData = await redis.get(storyUrl);
     
-    if (cachedData) {
-      // Send the cached data if found
-      res.setHeader('Content-Type', 'text/html');
-      res.status(200).send(cachedData);
-    } else {
-      // Fetch the data if not in cache
-      const response = await axios.get(`https://whitetigerhome.in/web-stories/${storyUrl}`);
-      let html = response.data;
-      html = replaceOgUrl(html);
-      // Store the data in Redis cache for future use
-      await redis.set(storyUrl, html, 'EX', 3600); // 3600 seconds expiration time
+//     if (cachedData) {
+//       // Send the cached data if found
+//       res.setHeader('Content-Type', 'text/html');
+//       res.status(200).send(cachedData);
+//     } else {
+//       // Fetch the data if not in cache
+//       const response = await axios.get(`https://whitetigerhome.in/web-stories/${storyUrl}`);
+//       let html = response.data;
+//       html = replaceOgUrl(html);
+//       // Store the data in Redis cache for future use
+//       await redis.set(storyUrl, html, 'EX', 3600); // 3600 seconds expiration time
 
-      res.setHeader('Content-Type', 'text/html');
-      res.status(200).send(html);
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('An error occurred while fetching the content');
-  }
-});
+//       res.setHeader('Content-Type', 'text/html');
+//       res.status(200).send(html);
+//     }
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send('An error occurred while fetching the content');
+//   }
+// });
 
 app.get('/about', (req, res) => {
   res.send('This is my about route..... ');
