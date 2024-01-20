@@ -10,10 +10,11 @@ const redis = new Redis("rediss://red-cffst6hgp3jjsea2p1c0:hsTt7ViwP8IrERyZaryFh
 app.listen(PORT, () => {
   console.log(`API listening on PORT ${PORT}`);
 });
-function replaceOgUrl(html) {
-  let updatedHtml = html;
 
-  // Replace 'og:url' content
+function replaceOgUrl(html, source="whitetigerhome") {
+  let updatedHtml = html;
+  if(source==="whitetigerhome"){
+      // Replace 'og:url' content
   updatedHtml = updatedHtml.replace(
     /<meta property="og:url" content="https:\/\/whitetigerhome\.in([^"]*)"/g,
     '<meta property="og:url" content="https://acadlog.com/blog$1"'
@@ -32,15 +33,68 @@ function replaceOgUrl(html) {
   );
 
   return updatedHtml;
+  }else if(source==="whylearnthings"){
+    // Replace 'og:url' content
+    updatedHtml = updatedHtml.replace(
+      /<meta property="og:url" content="https:\/\/whylearnthings\.com([^"]*)"/g,
+      '<meta property="og:url" content="https://acadlog.com/usa$1"'
+    );
+  
+    // Replace canonical link
+    updatedHtml = updatedHtml.replace(
+      /<link rel="canonical" href="https:\/\/whylearnthings\.com([^"]*)"/g,
+      '<link rel="canonical" href="https://acadlog.com/usa$1"'
+    );
+  
+    // General replacement for 'whylearnthings.com' to 'acadlog.com', excluding URLs with 'wp-content'
+    updatedHtml = updatedHtml.replace(
+      /https:\/\/whylearnthings\.com(?!.*wp-content)([^"]*)/g,
+      'https://acadlog.com/usa$1'
+    );  
+    return updatedHtml;
+  }else{
+    // Replace 'og:url' content
+    updatedHtml = updatedHtml.replace(
+      /<meta property="og:url" content="https:\/\/whitetigerhome\.in([^"]*)"/g,
+      '<meta property="og:url" content="https://acadlog.com/blog$1"'
+    );
+  
+    // Replace canonical link
+    updatedHtml = updatedHtml.replace(
+      /<link rel="canonical" href="https:\/\/whitetigerhome\.in([^"]*)"/g,
+      '<link rel="canonical" href="https://acadlog.com/blog$1"'
+    );
+  
+    // General replacement for 'whitetigerhome.in' to 'acadlog.com', excluding URLs with 'wp-content'
+    updatedHtml = updatedHtml.replace(
+      /https:\/\/whitetigerhome\.in(?!.*wp-content)([^"]*)/g,
+      'https://acadlog.com/blog$1'
+    );
+  
+    return updatedHtml;
+  }
 }
 
+
+app.get('/usa/*', async (req, res) => {
+  let path = req.params[0]
+  try {
+      const response = await axios.get(`https://whylearnthings.com/${path}`);
+      let html = response.data;
+      html = replaceOgUrl(html,"whylearnthings");
+      res.setHeader('Content-Type', 'text/html');
+      res.status(200).send(html);
+    }catch(err){
+      res.status(500).send('An error occurred while fetching the content');
+    }
+});
 
 app.get('/*', async (req, res) => {
   let path = req.params[0]
   try {
       const response = await axios.get(`https://whitetigerhome.in/${path}`);
       let html = response.data;
-      html = replaceOgUrl(html);
+      html = replaceOgUrl(html,"whitetigerhome");
       res.setHeader('Content-Type', 'text/html');
       res.status(200).send(html);
     }catch(err){
