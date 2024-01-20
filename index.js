@@ -76,7 +76,7 @@ function replaceOgUrl(html, source="whitetigerhome") {
 }
 
 
-app.get('/usa/*', async (req, res) => {
+app.get('/usa*', async (req, res) => {
   let path = req.params[0]
   try {
       const response = await axios.get(`https://whylearnthings.com/${path}`);
@@ -89,7 +89,7 @@ app.get('/usa/*', async (req, res) => {
     }
 });
 
-app.get('/*', async (req, res) => {
+app.get('/blog*', async (req, res) => {
   let path = req.params[0]
   try {
       const response = await axios.get(`https://whitetigerhome.in/${path}`);
