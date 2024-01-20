@@ -32,6 +32,12 @@ function replaceOgUrl(html, source="whitetigerhome") {
     'https://acadlog.com/blog$1'
   );
 
+  // New replacement for anchor tags
+  updatedHtml = updatedHtml.replace(
+  /<a([^>]*)href="https:\/\/whitetigerhome\.in([^"]*)"/g,
+  '<a$1href="https://acadlog.com/blog$2"'
+);
+
   return updatedHtml;
   }else if(source==="whylearnthings"){
     // Replace 'og:url' content
@@ -51,6 +57,13 @@ function replaceOgUrl(html, source="whitetigerhome") {
       /https:\/\/whylearnthings\.com(?!.*wp-content)([^"]*)/g,
       'https://acadlog.com/usa$1'
     );  
+
+    // New replacement for anchor tags
+    updatedHtml = updatedHtml.replace(
+      /<a([^>]*)href="https:\/\/whylearnthings\.com([^"]*)"/g,
+      '<a$1href="https://acadlog.com/usa$2"'
+    );
+    
     return updatedHtml;
   }else{
     // Replace 'og:url' content
@@ -100,94 +113,6 @@ app.get('/blog*', async (req, res) => {
     }catch(err){
       res.status(500).send('An error occurred while fetching the content');
     }
-});
-
-// app.get('/blog/hi/:blogUrl', async (req, res) => {
-//   const { blogUrl } = req.params;
-
-//   // Try to fetch the data from Redis cache first
-//   try {
-//     const cachedData = await redis.get(blogUrl);
-    
-//     if (cachedData) {
-//       // Send the cached data if found
-//       res.setHeader('Content-Type', 'text/html');
-//       res.status(200).send(cachedData);
-//     } else {
-//       // Fetch the data if not in cache
-//       const response = await axios.get(`https://whitetigerhome.in/blog/hi/${blogUrl}`);
-//       let html = response.data;
-//       html = replaceOgUrl(html);
-//       // Store the data in Redis cache for future use
-//       await redis.set(blogUrl, html, 'EX', 0); // 3600 seconds expiration time
-
-//       res.setHeader('Content-Type', 'text/html');
-//       res.status(200).send(html);
-//     }
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send('An error occurred while fetching the content');
-//   }
-// });
-
-// app.get('/blog/:blogUrl', async (req, res) => {
-//   const { blogUrl } = req.params;
-
-//   // Try to fetch the data from Redis cache first
-//   try {
-//     const cachedData = await redis.get(blogUrl);
-    
-//     if (false) {
-//       // Send the cached data if found
-//       res.setHeader('Content-Type', 'text/html');
-//       res.status(200).send(cachedData);
-//     } else {
-//       // Fetch the data if not in cache
-//       const response = await axios.get(`https://whitetigerhome.in/blog/${blogUrl}`);
-//       let html = response.data;
-//       html = replaceOgUrl(html);
-//       // Store the data in Redis cache for future use
-//       await redis.set(blogUrl, html, 'EX', 3600); // 3600 seconds expiration time
-
-//       res.setHeader('Content-Type', 'text/html');
-//       res.status(200).send(html);
-//     }
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send('An error occurred while fetching the content');
-//   }
-// });
-
-// app.get('/:storyUrl', async (req, res) => {
-//   const { storyUrl } = req.params;
-
-//   // Try to fetch the data from Redis cache first
-//   try {
-//     const cachedData = await redis.get(storyUrl);
-    
-//     if (cachedData) {
-//       // Send the cached data if found
-//       res.setHeader('Content-Type', 'text/html');
-//       res.status(200).send(cachedData);
-//     } else {
-//       // Fetch the data if not in cache
-//       const response = await axios.get(`https://whitetigerhome.in/web-stories/${storyUrl}`);
-//       let html = response.data;
-//       html = replaceOgUrl(html);
-//       // Store the data in Redis cache for future use
-//       await redis.set(storyUrl, html, 'EX', 3600); // 3600 seconds expiration time
-
-//       res.setHeader('Content-Type', 'text/html');
-//       res.status(200).send(html);
-//     }
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send('An error occurred while fetching the content');
-//   }
-// });
-
-app.get('/about', (req, res) => {
-  res.send('This is my about route..... ');
 });
 
 // Export the Express API
