@@ -39,7 +39,59 @@ function replaceOgUrl(html, source="whitetigerhome") {
 );
 
   return updatedHtml;
-  }else if(source==="whylearnthings"){
+  } else if(source==="sarkarinaukri.whitetigerhome.in"){
+    // Replace 'og:url' content
+      updatedHtml = updatedHtml.replace(
+        /<meta property="og:url" content="https:\/\/sarkarinaukri.whitetigerhome\.in([^"]*)"/g,
+        '<meta property="og:url" content="https://acadlog.com/sarkarinaukri$1"'
+      );
+
+      // Replace canonical link
+      updatedHtml = updatedHtml.replace(
+        /<link rel="canonical" href="https:\/\/sarkarinaukri.whitetigerhome\.in([^"]*)"/g,
+        '<link rel="canonical" href="https://acadlog.com/sarkarinaukri$1"'
+      );
+
+      // General replacement for 'whitetigerhome.in' to 'acadlog.com', excluding URLs with 'wp-content'
+      updatedHtml = updatedHtml.replace(
+        /https:\/\/sarkarinaukri.whitetigerhome\.in(?!.*wp-content)([^"]*)/g,
+        'https://acadlog.com/sarkarinaukri$1'
+      );
+
+      // New replacement for anchor tags
+      updatedHtml = updatedHtml.replace(
+      /<a([^>]*)href="https:\/\/sarkarinaukri.whitetigerhome\.in([^"]*)"/g,
+      '<a$1href="https://acadlog.com/sarkarinaukri$2"'
+      );
+
+      return updatedHtml;
+      } else if(source==="govtjobalerts.whitetigerhome.in"){
+        // Replace 'og:url' content
+      updatedHtml = updatedHtml.replace(
+      /<meta property="og:url" content="https:\/\/govtjobalerts.whitetigerhome\.in([^"]*)"/g,
+      '<meta property="og:url" content="https://acadlog.com/govtjobalerts$1"'
+      );
+
+      // Replace canonical link
+      updatedHtml = updatedHtml.replace(
+      /<link rel="canonical" href="https:\/\/govtjobalerts.whitetigerhome\.in([^"]*)"/g,
+      '<link rel="canonical" href="https://acadlog.com/govtjobalerts$1"'
+      );
+
+      // General replacement for 'whitetigerhome.in' to 'acadlog.com', excluding URLs with 'wp-content'
+      updatedHtml = updatedHtml.replace(
+      /https:\/\/govtjobalerts.whitetigerhome\.in(?!.*wp-content)([^"]*)/g,
+      'https://acadlog.com/govtjobalerts$1'
+      );
+
+      // New replacement for anchor tags
+      updatedHtml = updatedHtml.replace(
+      /<a([^>]*)href="https:\/\/govtjobalerts.whitetigerhome\.in([^"]*)"/g,
+      '<a$1href="https://acadlog.com/govtjobalerts$2"'
+      );
+
+    return updatedHtml;
+    }else if(source==="whylearnthings"){
     // Replace 'og:url' content
     updatedHtml = updatedHtml.replace(
       /<meta property="og:url" content="https:\/\/whylearnthings\.com([^"]*)"/g,
@@ -63,7 +115,6 @@ function replaceOgUrl(html, source="whitetigerhome") {
       /<a([^>]*)href="https:\/\/whylearnthings\.com([^"]*)"/g,
       '<a$1href="https://acadlog.com/usa$2"'
     );
-    
     return updatedHtml;
   }else{
     // Replace 'og:url' content
@@ -108,6 +159,32 @@ app.get('/blog*', async (req, res) => {
       const response = await axios.get(`https://whitetigerhome.in/${path}`);
       let html = response.data;
       html = replaceOgUrl(html,"whitetigerhome");
+      res.setHeader('Content-Type', 'text/html');
+      res.status(200).send(html);
+    }catch(err){
+      res.status(500).send('An error occurred while fetching the content');
+    }
+});
+
+app.get('/sarkarinaukri*', async (req, res) => {
+  let path = req.params[0]
+  try {
+      const response = await axios.get(`https://sarkarinaukri.whitetigerhome.in/${path}`);
+      let html = response.data;
+      html = replaceOgUrl(html,"sarkarinaukri.whitetigerhome.in");
+      res.setHeader('Content-Type', 'text/html');
+      res.status(200).send(html);
+    }catch(err){
+      res.status(500).send('An error occurred while fetching the content');
+    }
+});
+
+app.get('/govtjobalerts*', async (req, res) => {
+  let path = req.params[0]
+  try {
+      const response = await axios.get(`https://govtjobalerts.whitetigerhome.in/${path}`);
+      let html = response.data;
+      html = replaceOgUrl(html,"govtjobalerts.whitetigerhome.in");
       res.setHeader('Content-Type', 'text/html');
       res.status(200).send(html);
     }catch(err){
