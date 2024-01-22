@@ -28,7 +28,7 @@ function replaceOgUrl(html, source="whitetigerhome") {
 
   // General replacement for 'whitetigerhome.in' to 'acadlog.com', excluding URLs with 'wp-content'
   updatedHtml = updatedHtml.replace(
-    /https:\/\/whitetigerhome\.in(?!.*wp-content)([^"]*)/g,
+    /https:\/\/whitetigerhome\.in(?!.*(wp-content|wp-includes))([^"]*)/g,
     'https://acadlog.com/blog$1'
   );
 
@@ -54,7 +54,7 @@ function replaceOgUrl(html, source="whitetigerhome") {
 
       // General replacement for 'whitetigerhome.in' to 'acadlog.com', excluding URLs with 'wp-content'
       updatedHtml = updatedHtml.replace(
-        /https:\/\/sarkarinaukri.whitetigerhome\.in(?!.*wp-content)([^"]*)/g,
+        /https:\/\/sarkarinaukri.whitetigerhome\.in(?!.*(wp-content|wp-includes))([^"]*)/g,
         'https://acadlog.com/sarkarinaukri$1'
       );
 
@@ -80,7 +80,7 @@ function replaceOgUrl(html, source="whitetigerhome") {
 
       // General replacement for 'whitetigerhome.in' to 'acadlog.com', excluding URLs with 'wp-content'
       updatedHtml = updatedHtml.replace(
-      /https:\/\/govtjobalerts.whitetigerhome\.in(?!.*wp-content)([^"]*)/g,
+      /https:\/\/govtjobalerts.whitetigerhome\.in(?!.*(wp-content|wp-includes))([^"]*)/g,
       'https://acadlog.com/govtjobalerts$1'
       );
 
@@ -106,7 +106,7 @@ function replaceOgUrl(html, source="whitetigerhome") {
   
     // General replacement for 'whylearnthings.com' to 'acadlog.com', excluding URLs with 'wp-content'
     updatedHtml = updatedHtml.replace(
-      /https:\/\/whylearnthings\.com(?!.*wp-content)([^"]*)/g,
+      /https:\/\/whylearnthings\.com(?!.*(wp-content|wp-includes))([^"]*)/g,
       'https://acadlog.com/usa$1'
     );  
 
@@ -131,7 +131,7 @@ function replaceOgUrl(html, source="whitetigerhome") {
   
     // General replacement for 'whitetigerhome.in' to 'acadlog.com', excluding URLs with 'wp-content'
     updatedHtml = updatedHtml.replace(
-      /https:\/\/whitetigerhome\.in(?!.*wp-content)([^"]*)/g,
+      /https:\/\/whitetigerhome\.in(?!.*(wp-content|wp-includes))([^"]*)/g,
       'https://acadlog.com/blog$1'
     );
   
@@ -155,6 +155,7 @@ app.get('/usa*', async (req, res) => {
 
 app.get('/blog*', async (req, res) => {
   let path = req.params[0]
+  console.log(path)
   try {
       const response = await axios.get(`https://whitetigerhome.in/${path}`);
       let html = response.data;
