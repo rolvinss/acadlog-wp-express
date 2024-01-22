@@ -2,6 +2,7 @@ const express = require('express');
 const axios = require('axios');
 const Redis = require('ioredis');
 const app = express();
+const cors = require('cors');
 const PORT = 4000;
 
 // Configure Redis client
@@ -11,7 +12,23 @@ app.listen(PORT, () => {
   console.log(`API listening on PORT ${PORT}`);
 });
 
+app.use(cors());
+app.use('/assets', express.static('assets'));
+
 function replaceOgUrl(html, source="whitetigerhome") {
+  const linkTag1 = `<link rel="preload" href="/assets/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous"></link>`;
+  const linkTag2 = `<link rel="preload" href="/assets/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin="anonymous"></link>`;
+  const linkTag3 = `<link rel="preload" href="/assets/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous"></link>`;
+  const linkTag4 = `<link rel="preload" href="/assets/fonts/fa-v4compatibility.woff2" as="font" type="font/woff2" crossorigin="anonymous"></link>`;
+  const linkTag5 = `<link rel="preload" href="/assets/fonts/icons.woff2" as="font" type="font/woff2" crossorigin="anonymous"></link>`;
+  const linkTag6 = `<link rel="stylesheet" id="foxiz-main-css" href="/assets/css/main.css?ver=2.1.5" media="all">`
+  // Insert the link tag under the header section
+  html = html.replace(/(<\/head>)/i, `${linkTag1}$1`);
+  html = html.replace(/(<\/head>)/i, `${linkTag2}$1`);
+  html = html.replace(/(<\/head>)/i, `${linkTag3}$1`);
+  html = html.replace(/(<\/head>)/i, `${linkTag4}$1`);
+  html = html.replace(/(<\/head>)/i, `${linkTag5}$1`);
+  html = html.replace(/(<\/head>)/i, `${linkTag6}$1`);
   let updatedHtml = html;
   if(source==="whitetigerhome"){
       // Replace 'og:url' content
@@ -141,10 +158,10 @@ function replaceOgUrl(html, source="whitetigerhome") {
 
 
 app.get('/usa*', async (req, res) => {
-  let path = req.params[0]
+  let path = req.params[0];
   try {
-      const response = await axios.get(`https://whylearnthings.com/${path}`);
-      let html = response.data;
+    const response = await axios.get(`https://whylearnthings.com/${path}`);
+    let html = response.data;
       html = replaceOgUrl(html,"whylearnthings");
       res.setHeader('Content-Type', 'text/html');
       res.status(200).send(html);
