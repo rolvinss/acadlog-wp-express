@@ -13,7 +13,7 @@ app.listen(PORT, () => {
 });
 
 app.use(cors());
-app.use('/assets-foxiz', express.static('assets'));
+app.use('/assets-foxiz', express.static('assets-foxiz'));
 
 function replaceOgUrl(html, source="whitetigerhome") {
   const linkTag1 = `<link rel="preload" href="/assets-foxiz/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous"></link>`;
