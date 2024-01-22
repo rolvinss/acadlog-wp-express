@@ -13,15 +13,15 @@ app.listen(PORT, () => {
 });
 
 app.use(cors());
-app.use('/assets', express.static('assets'));
+app.use('/assets-foxiz', express.static('assets'));
 
 function replaceOgUrl(html, source="whitetigerhome") {
-  const linkTag1 = `<link rel="preload" href="/assets/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous"></link>`;
-  const linkTag2 = `<link rel="preload" href="/assets/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin="anonymous"></link>`;
-  const linkTag3 = `<link rel="preload" href="/assets/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous"></link>`;
-  const linkTag4 = `<link rel="preload" href="/assets/fonts/fa-v4compatibility.woff2" as="font" type="font/woff2" crossorigin="anonymous"></link>`;
-  const linkTag5 = `<link rel="preload" href="/assets/fonts/icons.woff2" as="font" type="font/woff2" crossorigin="anonymous"></link>`;
-  const linkTag6 = `<link rel="stylesheet" id="foxiz-main-css" href="/assets/css/main.css?ver=2.1.5" media="all">`
+  const linkTag1 = `<link rel="preload" href="/assets-foxiz/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous"></link>`;
+  const linkTag2 = `<link rel="preload" href="/assets-foxiz/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin="anonymous"></link>`;
+  const linkTag3 = `<link rel="preload" href="/assets-foxiz/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous"></link>`;
+  const linkTag4 = `<link rel="preload" href="/assets-foxiz/fonts/fa-v4compatibility.woff2" as="font" type="font/woff2" crossorigin="anonymous"></link>`;
+  const linkTag5 = `<link rel="preload" href="/assets-foxiz/fonts/icons.woff2" as="font" type="font/woff2" crossorigin="anonymous"></link>`;
+  const linkTag6 = `<link rel="stylesheet" id="foxiz-main-css" href="/assets-foxiz/css/main.css?ver=2.1.5" media="all">`
   // Insert the link tag under the header section
   html = html.replace(/(<\/head>)/i, `${linkTag1}$1`);
   html = html.replace(/(<\/head>)/i, `${linkTag2}$1`);
