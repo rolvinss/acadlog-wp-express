@@ -19910,7 +19910,7 @@ body:not(.yes-f-slideup) .slideup-toggle:hover {
 @font-face {
     font-family: 'ruby-icon';
     font-display: swap;
-    src: url('https://acadlog-storage.s3.ap-south-1.amazonaws.com/assets-foxiz/fonts/icons.woff2') format('woff2');
+    src: url('https://acadlog.com/assets-foxiz/fonts/icons.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
 }
