@@ -15,7 +15,7 @@ app.listen(PORT, () => {
 app.use(cors());
 app.use('/assets-foxiz', express.static('assets-foxiz'));
 
-function replaceOgUrl(html, source="whitetigerhome") {
+function replaceOgUrl(html, source = "whitetigerhome") {
   const linkTag1 = `<link rel="preload" href="https://acadlog.com/assets-foxiz/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous"></link>`;
   const linkTag2 = `<link rel="preload" href="https://acadlog.com/assets-foxiz/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin="anonymous"></link>`;
   const linkTag3 = `<link rel="preload" href="https://acadlog.com/assets-foxiz/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous"></link>`;
@@ -30,102 +30,102 @@ function replaceOgUrl(html, source="whitetigerhome") {
   html = html.replace(/(<\/head>)/i, `${linkTag5}$1`);
   html = html.replace(/(<\/head>)/i, `${linkTag6}$1`);
   let updatedHtml = html;
-  if(source==="whitetigerhome"){
-      // Replace 'og:url' content
-  updatedHtml = updatedHtml.replace(
-    /<meta property="og:url" content="https:\/\/whitetigerhome\.in([^"]*)"/g,
-    '<meta property="og:url" content="https://acadlog.com/blog$1"'
-  );
-
-  // Replace canonical link
-  updatedHtml = updatedHtml.replace(
-    /<link rel="canonical" href="https:\/\/whitetigerhome\.in([^"]*)"/g,
-    '<link rel="canonical" href="https://acadlog.com/blog$1"'
-  );
-
-  // General replacement for 'whitetigerhome.in' to 'acadlog.com', excluding URLs with 'wp-content'
-  updatedHtml = updatedHtml.replace(
-    /https:\/\/whitetigerhome\.in(?!.*wp-content)([^"]*)/g,
-    'https://acadlog.com/blog$1'
-  );
-
-  // New replacement for anchor tags
-  updatedHtml = updatedHtml.replace(
-  /<a([^>]*)href="https:\/\/whitetigerhome\.in([^"]*)"/g,
-  '<a$1href="https://acadlog.com/blog$2"'
-);
-
-  return updatedHtml;
-  } else if(source==="sarkarinaukri.whitetigerhome.in"){
+  if (source === "whitetigerhome") {
     // Replace 'og:url' content
-      updatedHtml = updatedHtml.replace(
-        /<meta property="og:url" content="https:\/\/sarkarinaukri.whitetigerhome\.in([^"]*)"/g,
-        '<meta property="og:url" content="https://acadlog.com/sarkarinaukri$1"'
-      );
+    updatedHtml = updatedHtml.replace(
+      /<meta property="og:url" content="https:\/\/whitetigerhome\.in([^"]*)"/g,
+      '<meta property="og:url" content="https://acadlog.com/blog$1"'
+    );
 
-      // Replace canonical link
-      updatedHtml = updatedHtml.replace(
-        /<link rel="canonical" href="https:\/\/sarkarinaukri.whitetigerhome\.in([^"]*)"/g,
-        '<link rel="canonical" href="https://acadlog.com/sarkarinaukri$1"'
-      );
+    // Replace canonical link
+    updatedHtml = updatedHtml.replace(
+      /<link rel="canonical" href="https:\/\/whitetigerhome\.in([^"]*)"/g,
+      '<link rel="canonical" href="https://acadlog.com/blog$1"'
+    );
 
-      // General replacement for 'whitetigerhome.in' to 'acadlog.com', excluding URLs with 'wp-content'
-      updatedHtml = updatedHtml.replace(
-        /https:\/\/sarkarinaukri.whitetigerhome\.in(?!.*wp-content)([^"]*)/g,
-        'https://acadlog.com/sarkarinaukri$1'
-      );
+    // General replacement for 'whitetigerhome.in' to 'acadlog.com', excluding URLs with 'wp-content'
+    updatedHtml = updatedHtml.replace(
+      /https:\/\/whitetigerhome\.in(?!.*wp-content)([^"]*)/g,
+      'https://acadlog.com/blog$1'
+    );
 
-      // New replacement for anchor tags
-      updatedHtml = updatedHtml.replace(
-      /<a([^>]*)href="https:\/\/sarkarinaukri.whitetigerhome\.in([^"]*)"/g,
-      '<a$1href="https://acadlog.com/sarkarinaukri$2"'
-      );
-
-      return updatedHtml;
-      } else if(source==="govtjobalerts.whitetigerhome.in"){
-        // Replace 'og:url' content
-      updatedHtml = updatedHtml.replace(
-      /<meta property="og:url" content="https:\/\/govtjobalerts.whitetigerhome\.in([^"]*)"/g,
-      '<meta property="og:url" content="https://acadlog.com/govtjobalerts$1"'
-      );
-
-      // Replace canonical link
-      updatedHtml = updatedHtml.replace(
-      /<link rel="canonical" href="https:\/\/govtjobalerts.whitetigerhome\.in([^"]*)"/g,
-      '<link rel="canonical" href="https://acadlog.com/govtjobalerts$1"'
-      );
-
-      // General replacement for 'whitetigerhome.in' to 'acadlog.com', excluding URLs with 'wp-content'
-      updatedHtml = updatedHtml.replace(
-      /https:\/\/govtjobalerts.whitetigerhome\.in(?!.*wp-content)([^"]*)/g,
-      'https://acadlog.com/govtjobalerts$1'
-      );
-
-      // New replacement for anchor tags
-      updatedHtml = updatedHtml.replace(
-      /<a([^>]*)href="https:\/\/govtjobalerts.whitetigerhome\.in([^"]*)"/g,
-      '<a$1href="https://acadlog.com/govtjobalerts$2"'
-      );
+    // New replacement for anchor tags
+    updatedHtml = updatedHtml.replace(
+      /<a([^>]*)href="https:\/\/whitetigerhome\.in([^"]*)"/g,
+      '<a$1href="https://acadlog.com/blog$2"'
+    );
 
     return updatedHtml;
-    }else if(source==="whylearnthings"){
+  } else if (source === "sarkarinaukri.whitetigerhome.in") {
+    // Replace 'og:url' content
+    updatedHtml = updatedHtml.replace(
+      /<meta property="og:url" content="https:\/\/sarkarinaukri.whitetigerhome\.in([^"]*)"/g,
+      '<meta property="og:url" content="https://acadlog.com/sarkarinaukri$1"'
+    );
+
+    // Replace canonical link
+    updatedHtml = updatedHtml.replace(
+      /<link rel="canonical" href="https:\/\/sarkarinaukri.whitetigerhome\.in([^"]*)"/g,
+      '<link rel="canonical" href="https://acadlog.com/sarkarinaukri$1"'
+    );
+
+    // General replacement for 'whitetigerhome.in' to 'acadlog.com', excluding URLs with 'wp-content'
+    updatedHtml = updatedHtml.replace(
+      /https:\/\/sarkarinaukri.whitetigerhome\.in(?!.*wp-content)([^"]*)/g,
+      'https://acadlog.com/sarkarinaukri$1'
+    );
+
+    // New replacement for anchor tags
+    updatedHtml = updatedHtml.replace(
+      /<a([^>]*)href="https:\/\/sarkarinaukri.whitetigerhome\.in([^"]*)"/g,
+      '<a$1href="https://acadlog.com/sarkarinaukri$2"'
+    );
+
+    return updatedHtml;
+  } else if (source === "govtjobalerts.whitetigerhome.in") {
+    // Replace 'og:url' content
+    updatedHtml = updatedHtml.replace(
+      /<meta property="og:url" content="https:\/\/govtjobalerts.whitetigerhome\.in([^"]*)"/g,
+      '<meta property="og:url" content="https://acadlog.com/govtjobalerts$1"'
+    );
+
+    // Replace canonical link
+    updatedHtml = updatedHtml.replace(
+      /<link rel="canonical" href="https:\/\/govtjobalerts.whitetigerhome\.in([^"]*)"/g,
+      '<link rel="canonical" href="https://acadlog.com/govtjobalerts$1"'
+    );
+
+    // General replacement for 'whitetigerhome.in' to 'acadlog.com', excluding URLs with 'wp-content'
+    updatedHtml = updatedHtml.replace(
+      /https:\/\/govtjobalerts.whitetigerhome\.in(?!.*wp-content)([^"]*)/g,
+      'https://acadlog.com/govtjobalerts$1'
+    );
+
+    // New replacement for anchor tags
+    updatedHtml = updatedHtml.replace(
+      /<a([^>]*)href="https:\/\/govtjobalerts.whitetigerhome\.in([^"]*)"/g,
+      '<a$1href="https://acadlog.com/govtjobalerts$2"'
+    );
+
+    return updatedHtml;
+  } else if (source === "whylearnthings") {
     // Replace 'og:url' content
     updatedHtml = updatedHtml.replace(
       /<meta property="og:url" content="https:\/\/whylearnthings\.com([^"]*)"/g,
       '<meta property="og:url" content="https://acadlog.com/usa$1"'
     );
-  
+
     // Replace canonical link
     updatedHtml = updatedHtml.replace(
       /<link rel="canonical" href="https:\/\/whylearnthings\.com([^"]*)"/g,
       '<link rel="canonical" href="https://acadlog.com/usa$1"'
     );
-  
+
     // General replacement for 'whylearnthings.com' to 'acadlog.com', excluding URLs with 'wp-content'
     updatedHtml = updatedHtml.replace(
       /https:\/\/whylearnthings\.com(?!.*wp-content)([^"]*)/g,
       'https://acadlog.com/usa$1'
-    );  
+    );
 
     // New replacement for anchor tags
     updatedHtml = updatedHtml.replace(
@@ -133,25 +133,25 @@ function replaceOgUrl(html, source="whitetigerhome") {
       '<a$1href="https://acadlog.com/usa$2"'
     );
     return updatedHtml;
-  }else{
+  } else {
     // Replace 'og:url' content
     updatedHtml = updatedHtml.replace(
       /<meta property="og:url" content="https:\/\/whitetigerhome\.in([^"]*)"/g,
       '<meta property="og:url" content="https://acadlog.com/blog$1"'
     );
-  
+
     // Replace canonical link
     updatedHtml = updatedHtml.replace(
       /<link rel="canonical" href="https:\/\/whitetigerhome\.in([^"]*)"/g,
       '<link rel="canonical" href="https://acadlog.com/blog$1"'
     );
-  
+
     // General replacement for 'whitetigerhome.in' to 'acadlog.com', excluding URLs with 'wp-content'
     updatedHtml = updatedHtml.replace(
       /https:\/\/whitetigerhome\.in(?!.*wp-content)([^"]*)/g,
       'https://acadlog.com/blog$1'
     );
-  
+
     return updatedHtml;
   }
 }
@@ -164,7 +164,7 @@ app.get('/usa*', async (req, res) => {
   if (path.includes('.xml')) {
     try {
       // Fetching and forwarding the XML content as is
-      const response = await axios.get(`https://whylearnthings.com/${path}`); 
+      const response = await axios.get(`https://whylearnthings.com/${path}`);
       let xml = response.data;
       // Replace the specific part of the URL in the XML content
       xml = xml.replace('whylearnthings.com/wp-content/plugins/wordpress-seo/css/main-sitemap.xsl', 'acadlog.com/yoast-xml/main-sitemap.xsl');
@@ -190,42 +190,90 @@ app.get('/usa*', async (req, res) => {
 });
 
 app.get('/blog*', async (req, res) => {
-  let path = req.params[0]
-  try {
+  let path = req.params[0];
+  if (path.includes('.xml')) {
+    try {
+      // Fetching and forwarding the XML content as is
+      const response = await axios.get(`https://whitetigerhome.in/${path}`);
+      let xml = response.data;
+      // Replace the specific part of the URL in the XML content
+      xml = xml.replace('whitetigerhome.in/wp-content/plugins/wordpress-seo/css/main-sitemap.xsl', 'acadlog.com/yoast-xml/main-sitemap.xsl');
+      xml = xml.replace(/whitetigerhome\.in/g, 'acadlog.com/blog');
+      res.setHeader('Content-Type', 'application/xml');
+      res.status(200).send(xml);
+    } catch (err) {
+      console.log(err)
+      res.status(500).send('An error occurred while fetching the XML content');
+    }
+  } else {
+    try {
       const response = await axios.get(`https://whitetigerhome.in/${path}`);
       let html = response.data;
-      html = replaceOgUrl(html,"whitetigerhome");
+      html = replaceOgUrl(html, "whitetigerhome");
       res.setHeader('Content-Type', 'text/html');
       res.status(200).send(html);
-    }catch(err){
+    } catch (err) {
       res.status(500).send('An error occurred while fetching the content');
     }
+  }
 });
 
 app.get('/sarkarinaukri*', async (req, res) => {
-  let path = req.params[0]
-  try {
+  let path = req.params[0];
+  if (path.includes('.xml')) {
+    try {
+      // Fetching and forwarding the XML content as is
+      const response = await axios.get(`https://sarkarinaukri.whitetigerhome.in/${path}`);
+      let xml = response.data;
+      // Replace the specific part of the URL in the XML content
+      xml = xml.replace('whitetigerhome.in/wp-content/plugins/wordpress-seo/css/main-sitemap.xsl', 'acadlog.com/yoast-xml/main-sitemap.xsl');
+      xml = xml.replace(/sarkarinaukri.whitetigerhome\.in/g, 'acadlog.com/sarkarinaukri');
+      res.setHeader('Content-Type', 'application/xml');
+      res.status(200).send(xml);
+    } catch (err) {
+      console.log(err)
+      res.status(500).send('An error occurred while fetching the XML content');
+    }
+  } else {
+    try {
       const response = await axios.get(`https://sarkarinaukri.whitetigerhome.in/${path}`);
       let html = response.data;
-      html = replaceOgUrl(html,"sarkarinaukri.whitetigerhome.in");
+      html = replaceOgUrl(html, "sarkarinaukri.whitetigerhome.in");
       res.setHeader('Content-Type', 'text/html');
       res.status(200).send(html);
-    }catch(err){
+    } catch (err) {
       res.status(500).send('An error occurred while fetching the content');
     }
+  }
 });
 
 app.get('/govtjobalerts*', async (req, res) => {
-  let path = req.params[0]
-  try {
+  let path = req.params[0];
+  if (path.includes('.xml')) {
+    try {
+      // Fetching and forwarding the XML content as is
+      const response = await axios.get(`https://govtjobalerts.whitetigerhome.in/${path}`);
+      let xml = response.data;
+      // Replace the specific part of the URL in the XML content
+      xml = xml.replace('whitetigerhome.in/wp-content/plugins/wordpress-seo/css/main-sitemap.xsl', 'acadlog.com/yoast-xml/main-sitemap.xsl');
+      xml = xml.replace(/govtjobalerts.whitetigerhome\.in/g, 'acadlog.com/govtjobalerts');
+      res.setHeader('Content-Type', 'application/xml');
+      res.status(200).send(xml);
+    } catch (err) {
+      console.log(err)
+      res.status(500).send('An error occurred while fetching the XML content');
+    }
+  } else {
+    try {
       const response = await axios.get(`https://govtjobalerts.whitetigerhome.in/${path}`);
       let html = response.data;
-      html = replaceOgUrl(html,"govtjobalerts.whitetigerhome.in");
+      html = replaceOgUrl(html, "govtjobalerts.whitetigerhome.in");
       res.setHeader('Content-Type', 'text/html');
       res.status(200).send(html);
-    }catch(err){
+    } catch (err) {
       res.status(500).send('An error occurred while fetching the content');
     }
+  }
 });
 
 // Export the Express API
