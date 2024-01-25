@@ -226,8 +226,9 @@ app.get('/sarkarinaukri*', async (req, res) => {
       const response = await axios.get(`https://sarkarinaukri.whitetigerhome.in/${path}`);
       let xml = response.data;
       // Replace the specific part of the URL in the XML content
-      xml = xml.replace('whitetigerhome.in/wp-content/plugins/wordpress-seo/css/main-sitemap.xsl', 'acadlog.com/yoast-xml/main-sitemap.xsl');
+      xml = xml.replace('sarkarinaukri.whitetigerhome.in/wp-content/plugins/wordpress-seo/css/main-sitemap.xsl', 'acadlog.com/yoast-xml/main-sitemap.xsl');
       xml = xml.replace(/sarkarinaukri.whitetigerhome\.in/g, 'acadlog.com/sarkarinaukri');
+      console.log(xml)
       res.setHeader('Content-Type', 'application/xml');
       res.status(200).send(xml);
     } catch (err) {
@@ -255,7 +256,7 @@ app.get('/govtjobalerts*', async (req, res) => {
       const response = await axios.get(`https://govtjobalerts.whitetigerhome.in/${path}`);
       let xml = response.data;
       // Replace the specific part of the URL in the XML content
-      xml = xml.replace('whitetigerhome.in/wp-content/plugins/wordpress-seo/css/main-sitemap.xsl', 'acadlog.com/yoast-xml/main-sitemap.xsl');
+      xml = xml.replace('govtjobalerts.whitetigerhome.in/wp-content/plugins/wordpress-seo/css/main-sitemap.xsl', 'acadlog.com/yoast-xml/main-sitemap.xsl');
       xml = xml.replace(/govtjobalerts.whitetigerhome\.in/g, 'acadlog.com/govtjobalerts');
       res.setHeader('Content-Type', 'application/xml');
       res.status(200).send(xml);
