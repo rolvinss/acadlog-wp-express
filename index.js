@@ -168,8 +168,7 @@ app.get('/usa*', async (req, res) => {
       let xml = response.data;
       // Replace the specific part of the URL in the XML content
       xml = xml.replace('whylearnthings.com/wp-content/plugins/wordpress-seo/css/main-sitemap.xsl', 'acadlog.com/yoast-xml/main-sitemap.xsl');
-      xml = xml.replace('whylearnthings.com', 'acadlog.com/usa');
-      console.log(xml)
+      xml = xml.replace(/whylearnthings\.com/g, 'acadlog.com/usa');
       res.setHeader('Content-Type', 'application/xml');
       res.status(200).send(xml);
     } catch (err) {
