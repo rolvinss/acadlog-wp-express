@@ -159,15 +159,35 @@ function replaceOgUrl(html, source="whitetigerhome") {
 
 app.get('/usa*', async (req, res) => {
   let path = req.params[0];
-  try {
-    const response = await axios.get(`https://whylearnthings.com/${path}`);
-    let html = response.data;
-      html = replaceOgUrl(html,"whylearnthings");
+
+  // Check if the path contains '.xml'
+  if (path.includes('.xml')) {
+    try {
+      // Fetching and forwarding the XML content as is
+      const response = await axios.get(`https://whylearnthings.com/${path}`); 
+      let xml = response.data;
+      // Replace the specific part of the URL in the XML content
+      xml = xml.replace('whylearnthings.com/wp-content/plugins/wordpress-seo/css/main-sitemap.xsl', 'acadlog.com/yoast-xml/main-sitemap.xsl');
+      xml = xml.replace('whylearnthings.com', 'acadlog.com/usa');
+      console.log(xml)
+      res.setHeader('Content-Type', 'application/xml');
+      res.status(200).send(xml);
+    } catch (err) {
+      console.log(err)
+      res.status(500).send('An error occurred while fetching the XML content');
+    }
+  } else {
+    // Existing code to handle non-XML requests
+    try {
+      const response = await axios.get(`https://whylearnthings.com/${path}`);
+      let html = response.data;
+      html = replaceOgUrl(html, "whylearnthings");
       res.setHeader('Content-Type', 'text/html');
       res.status(200).send(html);
-    }catch(err){
+    } catch (err) {
       res.status(500).send('An error occurred while fetching the content');
     }
+  }
 });
 
 app.get('/blog*', async (req, res) => {
