@@ -272,7 +272,7 @@ app.get('/govtjobalerts*', async (req, res) => {
       res.setHeader('Content-Type', 'text/html');
       res.status(200).send(html);
     } catch (err) {
-      res.status(500).send('An error occurred while fetching the content');
+      res.status(404).send('Page not found');
     }
   }
 });
