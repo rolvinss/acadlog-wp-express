@@ -86,25 +86,25 @@ function replaceOgUrl(html, source = "whitetigerhome") {
     // Replace 'og:url' content
     updatedHtml = updatedHtml.replace(
       /<meta property="og:url" content="https:\/\/govtjobalerts.whitetigerhome\.in([^"]*)"/g,
-      '<meta property="og:url" content="https://acadlog.com/govtjobalerts$1"'
+      '<meta property="og:url" content="https://acadlog.com/updates/job-alert$1"'
     );
 
     // Replace canonical link
     updatedHtml = updatedHtml.replace(
       /<link rel="canonical" href="https:\/\/govtjobalerts.whitetigerhome\.in([^"]*)"/g,
-      '<link rel="canonical" href="https://acadlog.com/govtjobalerts$1"'
+      '<link rel="canonical" href="https://acadlog.com/updates/job-alert$1"'
     );
 
     // General replacement for 'whitetigerhome.in' to 'acadlog.com', excluding URLs with 'wp-content'
     updatedHtml = updatedHtml.replace(
       /https:\/\/govtjobalerts.whitetigerhome\.in(?!.*wp-content)([^"]*)/g,
-      'https://acadlog.com/govtjobalerts$1'
+      'https://acadlog.com/updates/job-alert$1'
     );
 
     // New replacement for anchor tags
     updatedHtml = updatedHtml.replace(
       /<a([^>]*)href="https:\/\/govtjobalerts.whitetigerhome\.in([^"]*)"/g,
-      '<a$1href="https://acadlog.com/govtjobalerts$2"'
+      '<a$1href="https://acadlog.com/updates/job-alert$2"'
     );
 
     return updatedHtml;
@@ -257,7 +257,7 @@ app.get('/govtjobalerts*', async (req, res) => {
       let xml = response.data;
       // Replace the specific part of the URL in the XML content
       xml = xml.replace('govtjobalerts.whitetigerhome.in/wp-content/plugins/wordpress-seo/css/main-sitemap.xsl', 'acadlog.com/yoast-xml/main-sitemap.xsl');
-      xml = xml.replace(/govtjobalerts.whitetigerhome\.in/g, 'acadlog.com/govtjobalerts');
+      xml = xml.replace(/govtjobalerts.whitetigerhome\.in/g, 'acadlog.com/updates/job-alert');
       res.setHeader('Content-Type', 'application/xml');
       res.status(200).send(xml);
     } catch (err) {
