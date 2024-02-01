@@ -175,6 +175,17 @@ app.get('/usa*', async (req, res) => {
       console.log(err)
       res.status(500).send('An error occurred while fetching the XML content');
     }
+  }else if(path.includes('/feed')){
+    try {
+      const response = await axios.get(`https://whylearnthings.com/${path}`);
+      let xml = response.data;
+      res.setHeader('Content-Type', 'text/xml');
+      xml = xml.replace(/whylearnthings\.com(?!.*wp-content)/g, 'acadlog.com/usa');
+      res.status(200).send(xml);
+    } catch (error) {
+      console.log(error)
+      res.status(500).send('An error occurred while fetching the XML content');
+    }
   } else {
     // Existing code to handle non-XML requests
     try {
@@ -203,6 +214,17 @@ app.get('/blog*', async (req, res) => {
       res.status(200).send(xml);
     } catch (err) {
       console.log(err)
+      res.status(500).send('An error occurred while fetching the XML content');
+    }
+  }else if(path.includes('/feed')){
+    try {
+      const response = await axios.get(`https://whitetigerhome.in/${path}`);
+      let xml = response.data;
+      res.setHeader('Content-Type', 'text/xml');
+      xml = xml.replace(/whitetigerhome\.in(?!.*wp-content)/g, 'acadlog.com/blog');
+      res.status(200).send(xml);
+    } catch (error) {
+      console.log(error)
       res.status(500).send('An error occurred while fetching the XML content');
     }
   } else {
@@ -235,6 +257,17 @@ app.get('/sarkarinaukri*', async (req, res) => {
       console.log(err)
       res.status(500).send('An error occurred while fetching the XML content');
     }
+  }else if(path.includes('/feed')){
+    try {
+      const response = await axios.get(`https://sarkarinaukri.whitetigerhome.in/${path}`);
+      let xml = response.data;
+      res.setHeader('Content-Type', 'text/xml');
+      xml = xml.replace(/sarkarinaukri.whitetigerhome\.in(?!.*wp-content)/g, 'acadlog.com/sarkarinaukri');
+      res.status(200).send(xml);
+    } catch (error) {
+      console.log(error)
+      res.status(500).send('An error occurred while fetching the XML content');
+    }
   } else {
     try {
       const response = await axios.get(`https://sarkarinaukri.whitetigerhome.in/${path}`);
@@ -262,6 +295,17 @@ app.get('/govtjobalerts*', async (req, res) => {
       res.status(200).send(xml);
     } catch (err) {
       console.log(err)
+      res.status(500).send('An error occurred while fetching the XML content');
+    }
+  }else if(path.includes('/feed')){
+    try {
+      const response = await axios.get(`https://govtjobalerts.whitetigerhome.in/${path}`);
+      let xml = response.data;
+      res.setHeader('Content-Type', 'text/xml');
+      xml = xml.replace(/govtjobalerts.whitetigerhome\.in(?!.*wp-content)/g, 'acadlog.com/updates/job-alert');
+      res.status(200).send(xml);
+    } catch (error) {
+      console.log(error)
       res.status(500).send('An error occurred while fetching the XML content');
     }
   } else {
