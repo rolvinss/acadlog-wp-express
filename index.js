@@ -15,7 +15,7 @@ app.listen(PORT, () => {
 app.use(cors());
 app.use('/assets-foxiz', express.static('assets-foxiz'));
 
-function replaceOgUrl(html, source = "whitetigerhome") {
+function replaceOgUrl(html, source = "whitetigerhome",isWebStory) {
   const linkTag1 = `<link rel="preload" href="https://acadlog.com/assets-foxiz/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous"></link>`;
   const linkTag2 = `<link rel="preload" href="https://acadlog.com/assets-foxiz/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin="anonymous"></link>`;
   const linkTag3 = `<link rel="preload" href="https://acadlog.com/assets-foxiz/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous"></link>`;
@@ -23,12 +23,14 @@ function replaceOgUrl(html, source = "whitetigerhome") {
   const linkTag5 = `<link rel="preload" href="https://acadlog.com/assets-foxiz/fonts/icons.woff2" as="font" type="font/woff2" crossorigin="anonymous"></link>`;
   const linkTag6 = `<link rel="stylesheet" id="foxiz-main-css" href="https://acadlog.com/assets-foxiz/css/main.css?ver=2.1.5" media="all">`
   // Insert the link tag under the header section
-  html = html.replace(/(<\/head>)/i, `${linkTag1}$1`);
-  html = html.replace(/(<\/head>)/i, `${linkTag2}$1`);
-  html = html.replace(/(<\/head>)/i, `${linkTag3}$1`);
-  html = html.replace(/(<\/head>)/i, `${linkTag4}$1`);
-  html = html.replace(/(<\/head>)/i, `${linkTag5}$1`);
-  html = html.replace(/(<\/head>)/i, `${linkTag6}$1`);
+  if(!isWebStory){
+    html = html.replace(/(<\/head>)/i, `${linkTag1}$1`);
+    html = html.replace(/(<\/head>)/i, `${linkTag2}$1`);
+    html = html.replace(/(<\/head>)/i, `${linkTag3}$1`);
+    html = html.replace(/(<\/head>)/i, `${linkTag4}$1`);
+    html = html.replace(/(<\/head>)/i, `${linkTag5}$1`);
+    html = html.replace(/(<\/head>)/i, `${linkTag6}$1`);
+  }
   let updatedHtml = html;
   if (source === "whitetigerhome") {
     // Replace 'og:url' content
@@ -159,7 +161,7 @@ function replaceOgUrl(html, source = "whitetigerhome") {
 
 app.get('/usa*', async (req, res) => {
   let path = req.params[0];
-
+  let isWebStory = path.includes("/web-stories/");
   // Check if the path contains '.xml'
   if (path.includes('.xml')) {
     try {
@@ -191,7 +193,7 @@ app.get('/usa*', async (req, res) => {
     try {
       const response = await axios.get(`https://whylearnthings.com/${path}`);
       let html = response.data;
-      html = replaceOgUrl(html, "whylearnthings");
+      html = replaceOgUrl(html, "whylearnthings",isWebStory);
       res.setHeader('Content-Type', 'text/html');
       res.status(200).send(html);
     } catch (err) {
@@ -231,7 +233,7 @@ app.get('/blog*', async (req, res) => {
     try {
       const response = await axios.get(`https://whitetigerhome.in/${path}`);
       let html = response.data;
-      html = replaceOgUrl(html, "whitetigerhome");
+      html = replaceOgUrl(html, "whitetigerhome",isWebStory);
       res.setHeader('Content-Type', 'text/html');
       res.status(200).send(html);
     } catch (err) {
@@ -272,7 +274,7 @@ app.get('/sarkarinaukri*', async (req, res) => {
     try {
       const response = await axios.get(`https://sarkarinaukri.whitetigerhome.in/${path}`);
       let html = response.data;
-      html = replaceOgUrl(html, "sarkarinaukri.whitetigerhome.in");
+      html = replaceOgUrl(html, "sarkarinaukri.whitetigerhome.in",isWebStory);
       res.setHeader('Content-Type', 'text/html');
       res.status(200).send(html);
     } catch (err) {
@@ -312,7 +314,7 @@ app.get('/govtjobalerts*', async (req, res) => {
     try {
       const response = await axios.get(`https://govtjobalerts.whitetigerhome.in/${path}`);
       let html = response.data;
-      html = replaceOgUrl(html, "govtjobalerts.whitetigerhome.in");
+      html = replaceOgUrl(html, "govtjobalerts.whitetigerhome.in",isWebStory);
       res.setHeader('Content-Type', 'text/html');
       res.status(200).send(html);
     } catch (err) {
