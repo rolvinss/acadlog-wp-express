@@ -204,6 +204,7 @@ app.get('/usa*', async (req, res) => {
 
 app.get('/blog*', async (req, res) => {
   let path = req.params[0];
+  let isWebStory = path.includes("/web-stories/");
   if (path.includes('.xml')) {
     try {
       // Fetching and forwarding the XML content as is
@@ -244,6 +245,8 @@ app.get('/blog*', async (req, res) => {
 
 app.get('/sarkarinaukri*', async (req, res) => {
   let path = req.params[0];
+  let isWebStory = path.includes("/web-stories/");
+
   if (path.includes('.xml')) {
     try {
       // Fetching and forwarding the XML content as is
@@ -285,6 +288,7 @@ app.get('/sarkarinaukri*', async (req, res) => {
 
 app.get('/govtjobalerts*', async (req, res) => {
   let path = req.params[0];
+  let isWebStory = path.includes("/web-stories/");
   if (path.includes('.xml')) {
     try {
       // Fetching and forwarding the XML content as is
