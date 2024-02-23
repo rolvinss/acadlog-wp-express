@@ -36,25 +36,25 @@ function replaceOgUrl(html, source = "whitetigerhome",isWebStory) {
     // Replace 'og:url' content
     updatedHtml = updatedHtml.replace(
       /<meta property="og:url" content="https:\/\/whitetigerhome\.in([^"]*)"/g,
-      '<meta property="og:url" content="https://acadlog.com/blog$1"'
+      '<meta property="og:url" content="https://acadlog.com/updates/blog$1"'
     );
 
     // Replace canonical link
     updatedHtml = updatedHtml.replace(
       /<link rel="canonical" href="https:\/\/whitetigerhome\.in([^"]*)"/g,
-      '<link rel="canonical" href="https://acadlog.com/blog$1"'
+      '<link rel="canonical" href="https://acadlog.com/updates/blog$1"'
     );
 
     // General replacement for 'whitetigerhome.in' to 'acadlog.com', excluding URLs with 'wp-content'
     updatedHtml = updatedHtml.replace(
       /https:\/\/whitetigerhome\.in(?!.*wp-content)([^"]*)/g,
-      'https://acadlog.com/blog$1'
+      'https://acadlog.com/updates/blog$1'
     );
 
     // New replacement for anchor tags
     updatedHtml = updatedHtml.replace(
       /<a([^>]*)href="https:\/\/whitetigerhome\.in([^"]*)"/g,
-      '<a$1href="https://acadlog.com/blog$2"'
+      '<a$1href="https://acadlog.com/updates/blog$2"'
     );
 
     return updatedHtml;
@@ -139,19 +139,19 @@ function replaceOgUrl(html, source = "whitetigerhome",isWebStory) {
     // Replace 'og:url' content
     updatedHtml = updatedHtml.replace(
       /<meta property="og:url" content="https:\/\/whitetigerhome\.in([^"]*)"/g,
-      '<meta property="og:url" content="https://acadlog.com/blog$1"'
+      '<meta property="og:url" content="https://acadlog.com/updates/blog$1"'
     );
 
     // Replace canonical link
     updatedHtml = updatedHtml.replace(
       /<link rel="canonical" href="https:\/\/whitetigerhome\.in([^"]*)"/g,
-      '<link rel="canonical" href="https://acadlog.com/blog$1"'
+      '<link rel="canonical" href="https://acadlog.com/updates/blog$1"'
     );
 
     // General replacement for 'whitetigerhome.in' to 'acadlog.com', excluding URLs with 'wp-content'
     updatedHtml = updatedHtml.replace(
       /https:\/\/whitetigerhome\.in(?!.*wp-content)([^"]*)/g,
-      'https://acadlog.com/blog$1'
+      'https://acadlog.com/updates/blog$1'
     );
 
     return updatedHtml;
@@ -230,7 +230,7 @@ app.get('/blog*', async (req, res) => {
       let xml = response.data;
       // Replace the specific part of the URL in the XML content
       xml = xml.replace('whitetigerhome.in/wp-content/plugins/wordpress-seo/css/main-sitemap.xsl', 'acadlog.com/yoast-xml/main-sitemap.xsl');
-      xml = xml.replace(/whitetigerhome\.in/g, 'acadlog.com/blog');
+      xml = xml.replace(/whitetigerhome\.in/g, 'acadlog.com/updates/blog');
       res.setHeader('Content-Type', 'application/xml');
       res.status(200).send(xml);
     } catch (err) {
@@ -242,7 +242,7 @@ app.get('/blog*', async (req, res) => {
       const response = await axios.get(`https://whitetigerhome.in/${path}`);
       let xml = response.data;
       res.setHeader('Content-Type', 'text/xml');
-      xml = xml.replace(/whitetigerhome\.in(?!.*wp-content)/g, 'acadlog.com/blog');
+      xml = xml.replace(/whitetigerhome\.in(?!.*wp-content)/g, 'acadlog.com/updates/blog');
       res.status(200).send(xml);
     } catch (error) {
       console.log(error)
