@@ -204,6 +204,24 @@ app.get('/usa*', async (req, res) => {
 
 app.get('/blog*', async (req, res) => {
   let path = req.params[0];
+  let url = `https://acadlog-api.onrender.com/api/blog/public/${path}`
+  let dataFromAcad = null
+  try{
+    dataFromAcad = await axios.get(url);
+  }catch(err){
+
+  }
+  if(dataFromAcad!=null || dataFromAcad!=undefined){
+    try {
+      const response = await axios.get(`https://acadlog.com/updates/blog-old/${path}`);
+      let html = response.data;
+      res.setHeader('Content-Type', 'text/html');
+      res.status(200).send(html);
+    } catch (err) {
+      res.status(500).send('An error occurred while fetching the content');
+    }
+    return
+  }
   let isWebStory = path.includes("/web-stories/");
   if (path.includes('.xml')) {
     try {
