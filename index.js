@@ -204,7 +204,7 @@ app.get('/usa*', async (req, res) => {
 
 app.get('/blog*', async (req, res) => {
   let path = req.params[0];
-  console.log(path)
+  if(path.length>1){
   let url = `https://acadlog-api.onrender.com/api/blog/public${path}`
   let dataFromAcad = null
   try{
@@ -223,6 +223,7 @@ app.get('/blog*', async (req, res) => {
     }
     return
   }
+}
   let isWebStory = path.includes("/web-stories/");
   if (path.includes('.xml')) {
     try {
