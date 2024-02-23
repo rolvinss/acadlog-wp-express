@@ -204,7 +204,8 @@ app.get('/usa*', async (req, res) => {
 
 app.get('/blog*', async (req, res) => {
   let path = req.params[0];
-  let url = `https://acadlog-api.onrender.com/api/blog/public/${path}`
+  console.log(path)
+  let url = `https://acadlog-api.onrender.com/api/blog/public${path}`
   let dataFromAcad = null
   try{
     dataFromAcad = await axios.get(url);
@@ -213,7 +214,7 @@ app.get('/blog*', async (req, res) => {
   }
   if(dataFromAcad!=null || dataFromAcad!=undefined){
     try {
-      const response = await axios.get(`https://acadlog.com/updates/blog-old/${path}`);
+      const response = await axios.get(`https://acadlog.com/updates/blog-old${path}`);
       let html = response.data;
       res.setHeader('Content-Type', 'text/html');
       res.status(200).send(html);
