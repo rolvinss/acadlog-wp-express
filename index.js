@@ -192,7 +192,7 @@ app.get('/usajobsgov*', async (req, res) => {
       const response = await axios.get(`https://usajobsgov.whitetigerhome.in/${path}`);
       let xml = response.data;
       // Replace the specific part of the URL in the XML content
-      xml = xml.replace('usajobsgov.whitetigerhome.in/wp-content/plugins/wordpress-seo/css/main-sitemap.xsl', 'acadlog.com/usajobsgov/yoast-xml/main-sitemap.xsl');
+      xml = xml.replace('usajobsgov.whitetigerhome.in/wp-content/plugins/wordpress-seo/css/main-sitemap.xsl', 'acadlog.com/yoast-xml/main-sitemap.xsl');
       xml = xml.replace(/usajobsgov.whitetigerhome\.in/g, 'acadlog.com');
       res.setHeader('Content-Type', 'application/xml');
       res.status(200).send(xml);
