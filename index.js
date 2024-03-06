@@ -186,15 +186,14 @@ function replaceOgUrl(html, source = "whitetigerhome",isWebStory) {
 app.get('/usajobsgov*', async (req, res) => {
   let path = req.params[0];
   let isWebStory = path.includes("/web-stories/");
-  console.log(path)
   if (path.includes('.xml')) {
     try {
       // Fetching and forwarding the XML content as is
       const response = await axios.get(`https://usajobsgov.whitetigerhome.in/${path}`);
       let xml = response.data;
       // Replace the specific part of the URL in the XML content
-      xml = xml.replace('usajobsgov.whitetigerhome.in/wp-content/plugins/wordpress-seo/css/main-sitemap.xsl', 'acadlog.com/yoast-xml/main-sitemap.xsl');
-      xml = xml.replace(/usajobsgov.whitetigerhome\.in/g, 'acadlog.com/usajobsgov');
+      xml = xml.replace('usajobsgov.whitetigerhome.in/wp-content/plugins/wordpress-seo/css/main-sitemap.xsl', 'acadlog.com/usajobsgov/yoast-xml/main-sitemap.xsl');
+      xml = xml.replace(/usajobsgov.whitetigerhome\.in/g, 'acadlog.com');
       res.setHeader('Content-Type', 'application/xml');
       res.status(200).send(xml);
     } catch (err) {
