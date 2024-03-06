@@ -135,6 +135,31 @@ function replaceOgUrl(html, source = "whitetigerhome",isWebStory) {
       '<a$1href="https://acadlog.com/usa$2"'
     );
     return updatedHtml;
+  } else if (source === "usajobsgov.whitetigerhome.in") {
+    // Replace 'og:url' content
+    updatedHtml = updatedHtml.replace(
+      /<meta property="og:url" content="https:\/\/usajobsgov.whitetigerhome\.in([^"]*)"/g,
+      '<meta property="og:url" content="https://acadlog.com$1"'
+    );
+
+    // Replace canonical link
+    updatedHtml = updatedHtml.replace(
+      /<link rel="canonical" href="https:\/\/usajobsgov.whitetigerhome\.in([^"]*)"/g,
+      '<link rel="canonical" href="https://acadlog.com$1"'
+    );
+
+    // General replacement for 'whitetigerhome.in' to 'acadlog.com', excluding URLs with 'wp-content'
+    updatedHtml = updatedHtml.replace(
+      /https:\/\/usajobsgov.whitetigerhome\.in(?!.*wp-content)([^"]*)/g,
+      'https://acadlog.com$1'
+    );
+
+    // New replacement for anchor tags
+    updatedHtml = updatedHtml.replace(
+      /<a([^>]*)href="https:\/\/usajobsgov.whitetigerhome\.in([^"]*)"/g,
+      '<a$1href="https://acadlog.com$2"'
+    );
+    return updatedHtml;
   } else {
     // Replace 'og:url' content
     updatedHtml = updatedHtml.replace(
@@ -158,6 +183,47 @@ function replaceOgUrl(html, source = "whitetigerhome",isWebStory) {
   }
 }
 
+app.get('/usajobsgov*', async (req, res) => {
+  let path = req.params[0];
+  let isWebStory = path.includes("/web-stories/");
+  console.log(path)
+  if (path.includes('.xml')) {
+    try {
+      // Fetching and forwarding the XML content as is
+      const response = await axios.get(`https://usajobsgov.whitetigerhome.in/${path}`);
+      let xml = response.data;
+      // Replace the specific part of the URL in the XML content
+      xml = xml.replace('usajobsgov.whitetigerhome.in/wp-content/plugins/wordpress-seo/css/main-sitemap.xsl', 'acadlog.com/yoast-xml/main-sitemap.xsl');
+      xml = xml.replace(/usajobsgov.whitetigerhome\.in/g, 'acadlog.com/updates/job-alert');
+      res.setHeader('Content-Type', 'application/xml');
+      res.status(200).send(xml);
+    } catch (err) {
+      console.log(err)
+      res.status(500).send('An error occurred while fetching the XML content');
+    }
+  }else if(path.includes('/feed')){
+    try {
+      const response = await axios.get(`https://usajobsgov.whitetigerhome.in/${path}`);
+      let xml = response.data;
+      res.setHeader('Content-Type', 'text/xml');
+      xml = xml.replace(/usajobsgov.whitetigerhome\.in(?!.*wp-content)/g, 'acadlog.com/updates/job-alert');
+      res.status(200).send(xml);
+    } catch (error) {
+      console.log(error)
+      res.status(500).send('An error occurred while fetching the XML content');
+    }
+  } else {
+    try {
+      const response = await axios.get(`https://usajobsgov.whitetigerhome.in/${path}`);
+      let html = response.data;
+      html = replaceOgUrl(html, "usajobsgov.whitetigerhome.in",isWebStory);
+      res.setHeader('Content-Type', 'text/html');
+      res.status(200).send(html);
+    } catch (err) {
+      res.status(404).send('Page not found');
+    }
+  }
+});
 
 app.get('/usa*', async (req, res) => {
   let path = req.params[0];
@@ -346,6 +412,8 @@ app.get('/govtjobalerts*', async (req, res) => {
     }
   }
 });
+
+
 
 // Export the Express API
 module.exports = app;
