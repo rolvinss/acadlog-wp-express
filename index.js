@@ -183,7 +183,7 @@ function replaceOgUrl(html, source = "whitetigerhome",isWebStory) {
   }
 }
 
-app.get('/usajobsgov*', async (req, res) => {
+app.get('/sarkarinaukriblog*', async (req, res) => {
   let path = req.params[0];
   let isWebStory = path.includes("/web-stories/");
   if (path.includes('.xml')) {
@@ -340,7 +340,6 @@ app.get('/sarkarinaukri*', async (req, res) => {
       // Replace the specific part of the URL in the XML content
       xml = xml.replace('sarkarinaukri.whitetigerhome.in/wp-content/plugins/wordpress-seo/css/main-sitemap.xsl', 'acadlog.com/yoast-xml/main-sitemap.xsl');
       xml = xml.replace(/sarkarinaukri.whitetigerhome\.in/g, 'acadlog.com/sarkarinaukri');
-      console.log(xml)
       res.setHeader('Content-Type', 'application/xml');
       res.status(200).send(xml);
     } catch (err) {
