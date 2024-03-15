@@ -4,6 +4,7 @@ const Redis = require('ioredis');
 const app = express();
 const cors = require('cors');
 const PORT = 4000;
+const cheerio = require("cheerio");
 
 // Configure Redis client
 const redis = new Redis("rediss://red-cffst6hgp3jjsea2p1c0:hsTt7ViwP8IrERyZaryFhRsIcV8x7xQ0@singapore-redis.render.com:6379");
@@ -14,6 +15,71 @@ app.listen(PORT, () => {
 
 app.use(cors());
 app.use('/assets-foxiz', express.static('assets-foxiz'));
+
+function addSocialMediaButtons(html, source = "sarkarinaukri") {
+
+  if (source === "sarkarinaukri") {
+    // Load the HTML string into a Cheerio object
+    const $ = cheerio.load(html);
+   
+    // Find the target element
+    const targetElement = $(".ruby-table-contents.rbtoc.table-fw");
+
+    if (targetElement.length > 0) {
+      // Create the new element
+      const newElement = $(`<div id='custom-social-media-handler' style="display: flex; justify-content: space-evenly; flex-wrap: wrap;">
+      <h2 style="width: 100%; margin-bottom: 14px">
+      Daily Current Affairs और Job Alerts के लिए कृपया नीचे दिए गए चैनल्स में शामिल हों। </h2>
+      <a href="https://whatsapp.com/channel/0029VaPKnWUKbYMKgQC1mh0z" target="_blank"
+        style="background-color: #25D366; color: white; padding: 5px; border: none; border-radius: 20px; font-size: 14px; cursor: pointer; text-decoration: none; width: 100%; height: 50px; text-align: center; margin-bottom: 10px; display: inline-block; max-width: 400px">
+        <img src="https://acadlog-storage.s3.ap-south-1.amazonaws.com/bcfJw6q5AQvic1N6L_bhv-whatsapp.png" alt="WhatsApp"
+          style="height: 20px; margin-right: 10px;">Join WhatsApp Channel </a>
+      <a href="https://t.me/acadlog_sarkarinaukri" target="_blank"
+        style="background-color: #3390ec; color: white; padding: 5px; border: none; border-radius: 20px; font-size: 14px; cursor: pointer; text-decoration: none; width: 100%; height: 50px; text-align: center; margin-bottom: 10px; display: inline-block;max-width: 400px">
+        <img src="https://acadlog-storage.s3.ap-south-1.amazonaws.com/HVp7rC-yOXk5og9wNEqjk-telegram.png" alt="Telegram"
+          style="height: 20px; margin-right: 10px;">Join Telegram Channel </a>
+    </div>`);
+
+      // Insert the new element next to the target element
+      targetElement.after(newElement);
+
+      // Update the HTML string with the modified Cheerio object
+      html = $.html();
+    }
+  }
+
+  if (source === "job-alert") {
+    // Load the HTML string into a Cheerio object
+    const $ = cheerio.load(html);
+   
+    // Find the target element
+    const targetElement = $(".ruby-table-contents.rbtoc.table-fw");
+
+    if (targetElement.length > 0) {
+      // Create the new element
+      const newElement = $(`<div id='custom-social-media-handler' style="display: flex; justify-content: space-evenly; flex-wrap: wrap;">
+      <h2 style="width: 100%; margin-bottom: 14px">
+     For daily current affairs and job alerts please join below channels </h2>
+      <a href="https://whatsapp.com/channel/0029VaPKnWUKbYMKgQC1mh0z" target="_blank"
+        style="background-color: #25D366; color: white; padding: 5px; border: none; border-radius: 20px; font-size: 14px; cursor: pointer; text-decoration: none; width: 100%; height: 50px; text-align: center; margin-bottom: 10px; display: inline-block; max-width: 400px">
+        <img src="https://acadlog-storage.s3.ap-south-1.amazonaws.com/bcfJw6q5AQvic1N6L_bhv-whatsapp.png" alt="WhatsApp"
+          style="height: 20px; margin-right: 10px;">Join WhatsApp Channel </a>
+      <a href="https://t.me/acadlog_sarkarinaukri" target="_blank"
+        style="background-color: #3390ec; color: white; padding: 5px; border: none; border-radius: 20px; font-size: 14px; cursor: pointer; text-decoration: none; width: 100%; height: 50px; text-align: center; margin-bottom: 10px; display: inline-block;max-width: 400px">
+        <img src="https://acadlog-storage.s3.ap-south-1.amazonaws.com/HVp7rC-yOXk5og9wNEqjk-telegram.png" alt="Telegram"
+          style="height: 20px; margin-right: 10px;">Join Telegram Channel </a>
+    </div>`);
+      // Insert the new element next to the target element
+      targetElement.after(newElement);
+
+      // Update the HTML string with the modified Cheerio object
+      html = $.html();
+    }
+  }
+
+  return html;
+}
+
 
 function replaceOgUrl(html, source = "whitetigerhome",isWebStory) {
   const linkTag1 = `<link rel="preload" href="https://acadlog.com/assets-foxiz/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous"></link>`;
@@ -216,6 +282,7 @@ app.get('/sarkarinaukriblog*', async (req, res) => {
       const response = await axios.get(`https://usajobsgov.whitetigerhome.in/${path}`);
       let html = response.data;
       html = replaceOgUrl(html, "usajobsgov.whitetigerhome.in",isWebStory);
+      html = addSocialMediaButtons(html,"sarkarinaukriblog");
       res.setHeader('Content-Type', 'text/html');
       res.status(200).send(html);
     } catch (err) {
@@ -362,6 +429,7 @@ app.get('/sarkarinaukri*', async (req, res) => {
       const response = await axios.get(`https://sarkarinaukri.whitetigerhome.in/${path}`);
       let html = response.data;
       html = replaceOgUrl(html, "sarkarinaukri.whitetigerhome.in",isWebStory);
+      html = addSocialMediaButtons(html,"sarkarinaukri");
       res.setHeader('Content-Type', 'text/html');
       res.status(200).send(html);
     } catch (err) {
@@ -403,6 +471,7 @@ app.get('/govtjobalerts*', async (req, res) => {
       const response = await axios.get(`https://govtjobalerts.whitetigerhome.in/${path}`);
       let html = response.data;
       html = replaceOgUrl(html, "govtjobalerts.whitetigerhome.in",isWebStory);
+      html = addSocialMediaButtons(html,"job-alert");
       res.setHeader('Content-Type', 'text/html');
       res.status(200).send(html);
     } catch (err) {
