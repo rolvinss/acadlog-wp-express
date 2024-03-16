@@ -282,7 +282,7 @@ app.get('/sarkarinaukriblog*', async (req, res) => {
       const response = await axios.get(`https://usajobsgov.whitetigerhome.in/${path}`);
       let html = response.data;
       html = replaceOgUrl(html, "usajobsgov.whitetigerhome.in",isWebStory);
-      html = addSocialMediaButtons(html,"sarkarinaukriblog");
+      html = addSocialMediaButtons(html,"sarkarinaukri");
       res.setHeader('Content-Type', 'text/html');
       res.status(200).send(html);
     } catch (err) {
@@ -387,6 +387,7 @@ app.get('/blog*', async (req, res) => {
       const response = await axios.get(`https://whitetigerhome.in/${path}`);
       let html = response.data;
       html = replaceOgUrl(html, "whitetigerhome",isWebStory);
+      html = addSocialMediaButtons(html,"job-alert");
       res.setHeader('Content-Type', 'text/html');
       res.status(200).send(html);
     } catch (err) {
