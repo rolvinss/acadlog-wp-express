@@ -94,7 +94,7 @@ function addSocialMediaPopup(html, source = "sarkarinaukri") {
         .popup {
           display: none; /* Hidden by default */
           position: fixed; /* Stay in place */
-          z-index: 110; /* Sit on top */
+          z-index: 100000; /* Sit on top */
           left: 0;
           top: 0;
           width: 100%; /* Full width */
@@ -107,11 +107,17 @@ function addSocialMediaPopup(html, source = "sarkarinaukri") {
         /* Modal Content/Box */
         .popup-content {
           background-color: #fefefe;
-          margin: 15% auto; /* 15% from the top and centered */
+          margin: 130px auto; /* 15% from the top and centered */
           padding: 0 20px 20px;
           border: 1px solid #888;
           width: 80%; /* Could be more or less, depending on screen size */
           max-width: 400px;
+        }
+
+        @media only screen and (max-width: 767px) {
+          .popup-content {
+             margin: 15% auto; /* 15% from the top and centered */
+          }
         }
         
         /* The Close Button */
