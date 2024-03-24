@@ -80,6 +80,116 @@ function addSocialMediaButtons(html, source = "sarkarinaukri") {
   return html;
 }
 
+function addSocialMediaPopup(html, source = "sarkarinaukri") {
+  if (source === "sarkarinaukri") {
+    // Load the HTML string into a Cheerio object
+    const $ = cheerio.load(html);
+   
+    // Find the target element
+    const targetElement = $(".ruby-table-contents.rbtoc.table-fw");
+    if (targetElement.length > 0) {
+      // Create the new element
+      const newElement = $(`<style>
+        /* Custom CSS styles for the popup */
+        .popup {
+          display: none; /* Hidden by default */
+          position: fixed; /* Stay in place */
+          z-index: 110; /* Sit on top */
+          left: 0;
+          top: 0;
+          width: 100%; /* Full width */
+          height: 100%; /* Full height */
+          overflow: auto; /* Enable scroll if needed */
+          background-color: rgb(0,0,0); /* Fallback color */
+          background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+        
+        /* Modal Content/Box */
+        .popup-content {
+          background-color: #fefefe;
+          margin: 15% auto; /* 15% from the top and centered */
+          padding: 0 20px 20px;
+          border: 1px solid #888;
+          width: 80%; /* Could be more or less, depending on screen size */
+          max-width: 400px;
+        }
+        
+        /* The Close Button */
+        .close {
+          color: #aaa;
+          float: right;
+          font-size: 28px;
+          font-weight: bold;
+        }
+        
+        .close:hover,
+        .close:focus {
+          color: black;
+          text-decoration: none;
+          cursor: pointer;
+        }
+      </style>
+       <button id="showPopup" style="display: none;">Show Popup</button>
+      <div id="popup" class="popup">
+        <div class="popup-content">
+          <span id="closePopup" class="close">&times;</span>
+          <img src="https://acadlog-storage.s3.ap-south-1.amazonaws.com/aEqW3996f5mtlQ0JMAUFm-DAILYCURRENTAFFAIRS%2CQUIZANDMOCKTEST.png">
+          <a href="https://whatsapp.com/channel/0029VaPKnWUKbYMKgQC1mh0z" target="_blank"
+          style="background-color: #25D366; color: white; padding: 5px; border: none; border-radius: 20px; font-size: 14px; cursor: pointer; text-decoration: none; width: 100%; height: 50px; text-align: center; margin-bottom: 10px; display: inline-block; max-width: 400px">
+          <div style="margin-top: 8px">
+          <img src="https://acadlog-storage.s3.ap-south-1.amazonaws.com/bcfJw6q5AQvic1N6L_bhv-whatsapp.png" alt="WhatsApp"
+            style="height: 20px; margin-right: 10px;">Join WhatsApp Channel </div></a>
+        <a href="https://t.me/acadlog_sarkarinaukri" target="_blank"
+          style="background-color: #3390ec; color: white; padding: 5px; border: none; border-radius: 20px; font-size: 14px; cursor: pointer; text-decoration: none; width: 100%; height: 50px; text-align: center; margin-bottom: 10px; display: inline-block;max-width: 400px">
+          <div style="margin-top: 8px">
+          <img src="https://acadlog-storage.s3.ap-south-1.amazonaws.com/HVp7rC-yOXk5og9wNEqjk-telegram.png" alt="Telegram"
+            style="height: 20px; margin-right: 10px;">Join Telegram Channel</div> </a>       
+        </div>
+      </div>
+      <script>
+      // Get the popup element
+      var popup = document.getElementById("popup");
+      
+      // Get the button that opens the popup
+      var btn = document.getElementById("showPopup");
+      
+      // Get the <span> element that closes the popup
+      var span = document.getElementById("closePopup");
+
+      setTimeout(function() {
+        popup.style.display = "block";
+      }, 5000);
+      
+      // When the user clicks the button, open the popup
+      btn.onclick = function() {
+        popup.style.display = "block";
+      }
+      
+      // When the user clicks on <span> (x), close the popup
+      span.onclick = function() {
+        popup.style.display = "none";
+      }
+      
+      // When the user clicks anywhere outside of the popup, close it
+      // window.onclick = function(event) {
+      //   if (event.target == popup) {
+      //     popup.style.display = "none";
+      //   }
+      // }
+      
+      </script>`);
+
+      // Insert the new element next to the target element
+      targetElement.after(newElement);
+
+      // Update the HTML string with the modified Cheerio object
+      html = $.html();
+    }
+  }
+  return html;
+}
+
+
 
 function replaceOgUrl(html, source = "whitetigerhome",isWebStory) {
   const linkTag1 = `<link rel="preload" href="https://acadlog.com/assets-foxiz/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous"></link>`;
@@ -283,6 +393,7 @@ app.get('/sarkarinaukriblog*', async (req, res) => {
       let html = response.data;
       html = replaceOgUrl(html, "usajobsgov.whitetigerhome.in",isWebStory);
       html = addSocialMediaButtons(html,"sarkarinaukri");
+      html = addSocialMediaPopup(html,"sarkarinaukri");
       res.setHeader('Content-Type', 'text/html');
       res.status(200).send(html);
     } catch (err) {
@@ -388,6 +499,7 @@ app.get('/blog*', async (req, res) => {
       let html = response.data;
       html = replaceOgUrl(html, "whitetigerhome",isWebStory);
       html = addSocialMediaButtons(html,"job-alert");
+      html = addSocialMediaPopup(html,"sarkarinaukri");
       res.setHeader('Content-Type', 'text/html');
       res.status(200).send(html);
     } catch (err) {
@@ -431,6 +543,7 @@ app.get('/sarkarinaukri*', async (req, res) => {
       let html = response.data;
       html = replaceOgUrl(html, "sarkarinaukri.whitetigerhome.in",isWebStory);
       html = addSocialMediaButtons(html,"sarkarinaukri");
+      html = addSocialMediaPopup(html,"sarkarinaukri");
       res.setHeader('Content-Type', 'text/html');
       res.status(200).send(html);
     } catch (err) {
@@ -473,6 +586,7 @@ app.get('/govtjobalerts*', async (req, res) => {
       let html = response.data;
       html = replaceOgUrl(html, "govtjobalerts.whitetigerhome.in",isWebStory);
       html = addSocialMediaButtons(html,"job-alert");
+      html = addSocialMediaPopup(html,"sarkarinaukri");
       res.setHeader('Content-Type', 'text/html');
       res.status(200).send(html);
     } catch (err) {
