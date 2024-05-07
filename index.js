@@ -30,7 +30,7 @@ function addSocialMediaButtons(html, source = "sarkarinaukri") {
       const newElement = $(`<div id='custom-social-media-handler' style="display: flex; justify-content: space-evenly; flex-wrap: wrap;">
       <h2 style="width: 100%; margin-bottom: 14px">
       Daily Current Affairs और Job Alerts के लिए कृपया नीचे दिए गए चैनल्स में शामिल हों। </h2>
-      <a href="https://whatsapp.com/channel/0029VaPKnWUKbYMKgQC1mh0z" target="_blank"
+      <a href="https://chat.whatsapp.com/KTr6UBnuMaTBCtKA5JVNAs" target="_blank"
         style="background-color: #25D366; color: white; padding: 5px; border: none; border-radius: 20px; font-size: 14px; cursor: pointer; text-decoration: none; width: 100%; height: 50px; text-align: center; margin-bottom: 10px; display: inline-block; max-width: 400px">
         <img src="https://acadlog-storage.s3.ap-south-1.amazonaws.com/bcfJw6q5AQvic1N6L_bhv-whatsapp.png" alt="WhatsApp"
           style="height: 20px; margin-right: 10px;">Join WhatsApp Channel </a>
@@ -60,7 +60,7 @@ function addSocialMediaButtons(html, source = "sarkarinaukri") {
       const newElement = $(`<div id='custom-social-media-handler' style="display: flex; justify-content: space-evenly; flex-wrap: wrap;">
       <h2 style="width: 100%; margin-bottom: 14px">
      For daily current affairs and job alerts please join below channels </h2>
-      <a href="https://whatsapp.com/channel/0029VaPKnWUKbYMKgQC1mh0z" target="_blank"
+      <a href="https://chat.whatsapp.com/KTr6UBnuMaTBCtKA5JVNAs" target="_blank"
         style="background-color: #25D366; color: white; padding: 5px; border: none; border-radius: 20px; font-size: 14px; cursor: pointer; text-decoration: none; width: 100%; height: 50px; text-align: center; margin-bottom: 10px; display: inline-block; max-width: 400px">
         <img src="https://acadlog-storage.s3.ap-south-1.amazonaws.com/bcfJw6q5AQvic1N6L_bhv-whatsapp.png" alt="WhatsApp"
           style="height: 20px; margin-right: 10px;">Join WhatsApp Channel </a>
@@ -140,7 +140,7 @@ function addSocialMediaPopup(html, source = "sarkarinaukri") {
         <div class="popup-content">
           <span id="closePopup" class="close">&times;</span>
           <img src="https://acadlog-storage.s3.ap-south-1.amazonaws.com/aEqW3996f5mtlQ0JMAUFm-DAILYCURRENTAFFAIRS%2CQUIZANDMOCKTEST.png">
-          <a href="https://whatsapp.com/channel/0029VaPKnWUKbYMKgQC1mh0z" target="_blank"
+          <a href="https://chat.whatsapp.com/KTr6UBnuMaTBCtKA5JVNAs" target="_blank"
           style="background-color: #25D366; color: white; padding: 5px; border: none; border-radius: 20px; font-size: 14px; cursor: pointer; text-decoration: none; width: 100%; height: 50px; text-align: center; margin-bottom: 10px; display: inline-block; max-width: 400px">
           <div style="margin-top: 8px">
           <img src="https://acadlog-storage.s3.ap-south-1.amazonaws.com/bcfJw6q5AQvic1N6L_bhv-whatsapp.png" alt="WhatsApp"
